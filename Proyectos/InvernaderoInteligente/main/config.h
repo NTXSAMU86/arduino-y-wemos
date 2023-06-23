@@ -3,7 +3,7 @@
 // visit io.adafruit.com if you need to create an account,
 // or if you need your Adafruit IO key.
 #define IO_USERNAME  "Shadow_Kubi"
-#define IO_KEY       "JcCt37NdpH113kZzdrISevSa0MY4"
+#define IO_KEY       "aio_JcCt37NdpH113kZzdrISevSa0MY4"
 
 /******************************* WIFI **************************************/
 
@@ -20,7 +20,7 @@
 //   - Adafruit AirLift Shield -> https://www.adafruit.com/product/4285
 //   - Adafruit AirLift FeatherWing -> https://www.adafruit.com/product/4264
 
-#define WIFI_SSID "TECNOLOGIA"
+#define WIFI_SSID "Tecnologia"
 #define WIFI_PASS "tablero1"
 
 // uncomment the following line if you are using airlift

@@ -4,7 +4,7 @@
 #include <OneWire.h>
 #include <Wire.h>
 #include "DHT.h"
-#include "D:\Users\migue\Documents\arduino-y-wemos\Proyectos\InvernaderoInteligente\main\config.h"
+#include "C:\Users\ACER-15\Documents\m3l33\arduino-y-wemos\Proyectos\arduino-y-wemos\Proyectos\InvernaderoInteligente\main\config.h"
 
 // Llamamos a todos los feeds de Adafruit IO:
 
@@ -37,7 +37,7 @@ int humedad_ambiente;
 int temperatura_suelo;
 int temperatura_ambiente;
 int luz;
-bool rele;
+bool rele; 
 
 DHT dht(pinDHT, DHTTYPE); // Creamos el objeto del DHT
 OneWire oneWireBus(pinTemperatura); // Creamos el objeto del sensor de Temperatura del Suelo
@@ -97,8 +97,6 @@ void loop()
     {
 
       activarBomba(true);
-      delay(1000); // OJITO CON LOS DELAY(): FUNCIÓN EXPERIMENTAL
-      activarBomba(false);
 
     }
     else
