@@ -17,8 +17,6 @@ AdafruitIO_Feed *a_rele = io.feed("activar_bomba");
 
 
 #define DHTTYPE DHT11 // Definimos el tipo de Sensor DHT que estemos usando
-#define IO_LOOP_DELAY 10000 // Definimos el tiempo de delay del bucle
-unsigned long lastUpdate = 0;
 
 
 // Declaramos los pines que vamos a utilizar.
@@ -27,8 +25,7 @@ const byte pinDHT = 12;
 const byte pinHumedad = 39;
 const byte pinTemperatura = 16;
 const byte pinLDR = 34;
-const byte pinReleB = 13;
-const byte pinReleV = 14;
+
 
 // Declaramos todas las variables de datos.
 
@@ -50,12 +47,9 @@ void setup()
   Serial.begin(9600); // Inicializamos el Puerto Serie
   dht.begin(); // Inicializamos el DHT
   sensor.begin();  //Inicializamos el sensor de Temperatura del Suelo
-
-  pinMode(pinReleB, OUTPUT); // Activamos los pines de relé como SALIDA
-  pinMode(pinReleV, OUTPUT);
+  Wire.begin();
 
   io.connect(); // Inicializamos la conexión con Adafruit IO
-  a_rele->onMessage(datoRecibido); // Hacemos "listen" a la feed del relé
 
   Serial.println();
 
@@ -67,17 +61,11 @@ void setup()
   Serial.println();
   Serial.println(io.statusText());
 
-  a_rele->get(); // Hacemos "listen" a la feed del relé
 }
 
 void loop()
 {
   io.run(); // Dejamos que el cliente permanezca conectado a Adafruit IO
-
-
-
-  if (millis() > (lastUpdate + IO_LOOP_DELAY)) {
-
 
     humedad_suelo = medirHumedadSuelo();
     humedad_ambiente = medirHT("humedad");
@@ -93,35 +81,29 @@ void loop()
 
     enviarPuertoSerie(humedad_suelo, humedad_ambiente, temperatura_suelo, temperatura_ambiente, luz);
 
+    delay(2500);
+
     if(humedad_suelo < 20)
     {
 
-      activarBomba(true);
+      activarBomba(1);
 
     }
     else
     {
-      activarBomba(false);
+      activarBomba(0);
     }
 
     if(temperatura_ambiente > 35)
     {
 
-      activarVentilacion(true);
+      activarVentilacion(1);
 
     }
     else
     {
-      activarVentilacion(false);
+      activarVentilacion(0);
     }
 
-    // after publishing, store the current time
-    lastUpdate = millis();
-  }
-}
-
-void datoRecibido(AdafruitIO_Data *data) {
-
-  rele = String(data->value()).toInt();
-
+  delay(2500);
 }

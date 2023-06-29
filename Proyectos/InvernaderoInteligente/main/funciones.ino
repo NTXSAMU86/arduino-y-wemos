@@ -3,6 +3,9 @@ int fluz;
 float fhumedad;
 float ftemperatura;
 
+const byte pinReleB = 4;
+const byte pinReleV = 3;
+
 int medirHumedadSuelo()
 {
   fhumedad_suelo = map(analogRead(pinHumedad), 0, 4095, 0, 100); // map(value, fromLow, fromHigh, toLow, toHigh) para mapear los valores (de 4096 a 100, pe.)
@@ -37,28 +40,20 @@ double medirTemperaturaSuelo()
   return sensor.getTempCByIndex(0);
 }
 
-void activarBomba( bool activa )
+void activarVentilacion(byte estadoReleV)
 {
-  if (activa)
-  {
-    digitalWrite(pinReleB, HIGH);
-  }
-  else
-  {
-    digitalWrite(pinReleB, LOW);
-  }
+  Wire.beginTransmission(1);
+  Wire.write(pinReleV);
+  Wire.write(estadoReleV);
+  Wire.endTransmission();
 }
 
-void activarVentilacion( bool activa )
+void activarBomba(byte estadoReleB)
 {
-  if (activa)
-  {
-    digitalWrite(pinReleV, HIGH);
-  }
-  else
-  {
-    digitalWrite(pinReleV, LOW);
-  }
+  Wire.beginTransmission(1);
+  Wire.write(pinReleB);
+  Wire.write(estadoReleB);
+  Wire.endTransmission();
 }
 
 void enviarPuertoSerie(int dhum_suelo, int dhum_amb, int dtemp_suelo, int dtemp_amb, int dluz)
